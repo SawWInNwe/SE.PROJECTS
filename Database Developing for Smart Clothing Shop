@@ -1,0 +1,300 @@
+
+Create database db;
+use db;
+create schema dbschema;
+---create category table---
+create table dbschema.Category(
+CategoryID char(5) primary key,
+CategoryName varchar(200) Not Null,)
+
+drop table dbschema.Category
+---insert into category table---    
+insert into dbschema.Category values('CTG01','Illume');
+insert into dbschema.Category values('CTG02','Histoire');
+insert into dbschema.Category values('CTG03','Jeunesse �ternelle');
+insert into dbschema.Category values('CTG04','Oracle');
+insert into dbschema.Category values('CTG05','Poussi�re de F�e');
+insert into dbschema.Category values('CTG06','Accessoires par Charade');
+insert into dbschema.Category values('CTG07','Mode par Vertu');
+insert into dbschema.Category values('CTG08','Couture par �tincelle');
+insert into dbschema.Category values('CTG09','Couture par Parangon');
+insert into dbschema.Category values('CTG10','Mode par Imp�ratrice');
+insert into dbschema.Category values('CTG11','Virtue');
+insert into dbschema.Category values('CTG12','Paradox');
+insert into dbschema.Category values('CTG13','Halcyon');
+insert into dbschema.Category values('CTG14','Temptation');
+insert into dbschema.Category values('CTG15','Jumpsync');
+
+insert into dbschema.Category values('CTG16','JJ');
+insert into dbschema.Category values('CTG016','JJ');
+insert into dbschema.Category values(not null,'JJ');
+select * from dbschema.Category;
+---create table dbschema.Item---
+create table dbschema.Item(
+ItemID char(4) primary key,
+ItemName varchar(100) Not Null,
+ItemUnitPrice money Not Null,
+CategoryID char(5) foreign key references dbschema.Category(CategoryID));
+---insert into dbschema.Item---
+insert into dbschema.Item values('ID10','Jeans',30000,'CTG01'),('ID22','Shirts and pants',70000,'CTG02'),('ID50','Underwaer',10000,'CTG09'),('ID51','Tshirt',20000,'CTG15'),
+('ID69','Jumper Suits',40000,'CTG13'),('ID13','Woman Suits',150000,'CTG03'),('ID52','Jackets',90000,'CTG11'),('ID53','Bra',20000,'CTG08'),
+('ID59','Jumper',21000,'CTG12'),('ID01','Belts and Ties',20000,'CTG04'),('ID55','Body Suits',170000,'CTG05'),('ID54','Cardigan',60000,'CTG10'),
+('ID58','Bloomer',45000,'CTG07'),('ID57','Coat',65000,'CTG06'),('ID56','Play Suits',40000,'CTG14');
+
+select * from dbschema.Item
+
+insert into dbschema.Item values('ID71','red coat',10000,'CTG01')
+insert into dbschema.Item values('ID071','leather',10000,'CTG01')
+insert into dbschema.Item values(not null,'leather',10000,'CTG01')
+
+select * from dbschema.Item
+
+
+
+---create table dbschema.SF---
+create table dbschema.SF(
+SFID char(4) primary key,
+SFName varchar(100))
+
+---insert into dbschema.SF---
+insert into dbschema.SF values('SF01','Jerry');
+insert into dbschema.SF values('SF05','Sarah'),
+('SF13','Shaw'),('SF14','Simond'),
+('SF16','West');
+
+insert into dbschema.SF values ('SF17','Tom')
+insert into dbschema.SF values ('SF017','Tom')
+insert into dbschema.SF values (not null,'Tom')
+select * from dbschema.SF
+	
+---create table dbschema.Customer---
+create table dbschema.Customer(
+CustomerID char(5) primary key,
+CustomerName varchar(100) Not Null)
+
+insert into dbschema.Customer values ('CUS17','heather')
+insert into dbschema.Customer values ('CUS017','heather')
+insert into dbschema.Customer values (not null,'heather')
+select * from dbschema.SF
+
+---insert into dbschema.Customer---
+insert into dbschema.Customer values('CUS01','Selena');
+insert into dbschema.Customer values('CUS04','Maya'),('CUS06','Billie'),('CUS07','Taylor'),
+('CUS11','Polly'),('CUS12','Corbyn'),('CUS13','Don'),('CUS14','Thelma '),('CUS15','Wheatly');
+
+select * from dbschema.Customer;
+
+---create table dbschema.Ord---
+create table dbschema.Ord(
+OrderNumber char(4) primary key,
+OrderDate Date Not Null,
+DeliveryDate Date Not Null,
+DeliveryFee smallmoney Not Null,
+Discount int NOT NULL,
+DeliveryTime Time NOT NULL,
+Tax FLOAT NOT NULL)
+Alter table dbschema.Ord add SFID char(4)
+Alter table dbschema.Ord add constraint FK_SF_SFID foreign key (SFID)
+references dbschema.SF(SFID);
+Alter table dbschema.Ord add CustomerID char(5)
+Alter table dbschema.Ord add constraint FK_CUS_CustomerID foreign key (CustomerID)
+references dbschema.Customer(CustomerID);
+drop table dbschema.Ord
+select * from dbschema.Ord
+
+---insert into dbschema.Ord---
+insert into dbschema.Ord values('OD04','2022/9/20','2022/12/21',2000,0,'10:00',153.580,'SF01','CUS04');
+insert into dbschema.Ord values('OD06','2022/9/20','2022/12/21',2000,0,'11:00',153.580,'SF01','CUS06');
+insert into dbschema.Ord values('OD07','2022/9/20','2022/10/1',10000,0,'11:00',153.580,'SF05','CUS07');
+insert into dbschema.Ord values('OD21','2022/10/3','2022/10/5',4000,0,'10:10',153.580,'SF14','CUS01');
+insert into dbschema.Ord values('OD11','2022/10/4','2022/10/2',2000,0,'9:10',153.580,'SF13','CUS11');
+insert into dbschema.Ord values('OD12','2022/10/10','2022/10/2',4000,0,'10:45',153.580,'SF13','CUS12');
+insert into dbschema.Ord values('OD13','2022/10/13','2022/10/15',3000,0,'10:30',153.580,'SF13','CUS13');
+insert into dbschema.Ord values('OD24','2022/10/14','2022/10/18',10000,0,'10:00',153.580,'SF16','CUS04');
+insert into dbschema.Ord values('OD14','2022/10/15','2022/10/17',4000,0,'12:50',153.580,'SF13','CUS14');
+insert into dbschema.Ord values('OD15','2022/10/18','2022/10/20',2000,0,'11:36',153.580,'SF13','CUS15');
+insert into dbschema.Ord values('OD26','2022/10/21','2022/10/23',2000,0,'1:00',153.580,'SF16','CUS06');
+insert into dbschema.Ord values('OD16','2022/10/22','2022/10/26',3000,0,'10:15',153.580,'SF13','CUS06');
+insert into dbschema.Ord values('OD27','2022/11/2','2022/11/5',3000,0,'2:45',153.580,'SF16','CUS07');
+
+
+drop table dbschema.Ord
+
+
+---create table OrderInvoice---
+create table dbschema.OrderInvoice(
+Ordernumber char(4) foreign key references dbschema.Ord(Ordernumber),
+ItemID char(4) foreign key references dbschema.Item(ItemID),
+Quantity int NOT NULL);
+drop table dbschema.OrderInvoice
+---insert into OrderInvoice---
+insert into dbschema.OrderInvoice values('OD04','ID01',60);
+insert into dbschema.OrderInvoice values('OD06','ID57',70);
+insert into dbschema.OrderInvoice values('OD07','ID58',80);
+insert into dbschema.OrderInvoice values('OD21','ID10',1);
+insert into dbschema.OrderInvoice values('OD11','ID52',2);
+insert into dbschema.OrderInvoice values('OD12','ID59',9);
+insert into dbschema.OrderInvoice values('OD13','ID69',90);
+insert into dbschema.OrderInvoice values('OD24','ID01',10);
+insert into dbschema.OrderInvoice values('OD14','ID56',6);
+insert into dbschema.OrderInvoice values('OD15','ID51',10);
+insert into dbschema.OrderInvoice values('OD26','ID57',70);
+insert into dbschema.OrderInvoice values('OD16','ID57',7);
+insert into dbschema.OrderInvoice values('OD27','ID58',8);
+
+select * from dbschema.OrderInvoice;
+
+Drop table dbschema.OrderInvoice
+
+----Query1---
+select top 15 dbschema.Item.ItemName,dbschema.Category.CategoryName,sum(dbschema.Item.ItemUnitPrice* dbschema.OrderInvoice.Quantity) 
+as "Total Price",sum(dbschema.OrderInvoice.Quantity) as "Quantity", datename(month,dbschema.Ord.OrderDate) as month
+from dbschema.Item inner join dbschema.Category on dbschema.Item.CategoryID = dbschema.Category.CategoryID inner join dbschema.OrderInvoice 
+on dbschema.OrderInvoice.ItemID = dbschema.Item.ItemID inner join dbschema.Ord on dbschema.OrderInvoice.OrderNumber = dbschema.Ord.OrderNumber
+where month(dbschema.Ord.OrderDate) = month(getdate())
+group by dbschema.Item.ItemID,dbschema.Item.ItemName,dbschema.Category.CategoryName,dbschema.Ord.OrderDate
+order by sum(dbschema.OrderInvoice.Quantity) DESC
+
+
+---Query2---
+select distinct(dbschema.Item.ItemID),dbschema.Item.ItemName,dbschema.Category.CategoryName,sum(dbschema.OrderInvoice.Quantity * dbschema.Item.ItemUnitPrice) 
+as "Total Price",sum(dbschema.OrderInvoice.Quantity) as "Total ordering amount",datename(month,dbschema.Ord.OrderDate) as Month,year(dbschema.Ord.OrderDate)as Year
+from dbschema.Item inner join dbschema.Category on dbschema.Item.CategoryID = dbschema.Category.CategoryID inner join dbschema.OrderInvoice 
+on dbschema.OrderInvoice.ItemID = dbschema.Item.ItemID inner join dbschema.Ord on dbschema.OrderInvoice.OrderNumber=dbschema.Ord.OrderNumber
+where year(dbschema.Ord.OrderDate) = 2022 
+group by dbschema.Item.ItemID,dbschema.Item.ItemName,dbschema.Category.CategoryName,dbschema.Ord.OrderDate
+
+-- Query 3 ----
+select top 15 dbschema.Item.ItemName,dbschema.Category.CategoryName,sum(dbschema.Item.ItemUnitPrice*dbschema.OrderInvoice.Quantity) 
+as "Total Price",sum(dbschema.OrderInvoice.Quantity) as "Quantity", datename(month,dbschema.Ord.OrderDate) as month
+from dbschema.Item inner join dbschema.Category on dbschema.Item.CategoryID = dbschema.Category.CategoryID inner join dbschema.OrderInvoice 
+on dbschema.OrderInvoice.ItemID = dbschema.Item.ItemID inner join dbschema.Ord on dbschema.OrderInvoice.OrderNumber = dbschema.Ord.OrderNumber
+where month(dbschema.Ord.OrderDate) = month(getdate())
+group by dbschema.Item.ItemID,dbschema.Item.ItemName,dbschema.Category.CategoryName,dbschema.Ord.OrderDate
+order by sum(dbschema.OrderInvoice.Quantity) DESC
+
+----Query 4---
+declare @FromMonth datetime
+declare @ToMonth datetime
+set @FromMonth = '20220901'
+set @ToMonth = '20221231'
+select dbschema.Customer.CustomerName,count(dbschema.Customer.CustomerID) as "Total Ordering transaction", datename(month,dbschema.Ord.OrderDate) as Month
+from dbschema.Customer inner join dbschema.Ord on dbschema.Customer.CustomerID = dbschema.Ord.CustomerID
+where dbschema.Ord.OrderDate between @FromMonth and @ToMonth
+group by datename(month,dbschema.Ord.OrderDate),dbschema.Customer.CustomerID,dbschema.Customer.CustomerName
+order by dbschema.Customer.CustomerID ASC
+
+---Query 5 ---
+select dbschema.Ord.OrderDate as Date, sum(dbschema.Item.ItemUnitPrice * dbschema.OrderInvoice.Quantity) 
+as "Total Selling amount",sum(dbschema.Ord.Discount) as "Total Discount amount", sum(dbschema.Ord.DeliveryFee) as "Total Delivery Charges"
+from dbschema.Ord inner join dbschema.OrderInvoice on dbschema.Ord.OrderNumber = dbschema.OrderInvoice.OrderNumber inner join dbschema.Item 
+on dbschema.OrderInvoice.ItemID = dbschema.Item.ItemID
+group by dbschema.Ord.OrderDate
+
+--Query 6 ----
+select top 5 dbschema.SF.SFID, dbschema.SF.SFName, count(dbschema.SF.SFName) as "Total Ordering count"
+from dbschema.SF inner join dbschema.Ord on dbschema.SF.SFID =dbschema.Ord.SFID
+where month(dbschema.Ord.OrderDate) = month(getdate())
+group by dbschema.SF.SFID, dbschema.SF.SFName
+order by count(dbschema.SF.SFID) DESC
+
+
+
+---create login with password ---
+CREATE Login AdminofDDD
+with PASSWORD = 'sam123';
+
+---create admin user---
+CREATE user adminDDD for Login AdminofDDD;
+
+---create admin schema--
+---create schema ADMINISTRACTOR ;---
+
+--grant access on adminDB--
+grant select on dbschema.Category to adminDDD;
+grant select on dbschema.Item to adminDDD;
+grant select on dbschema.Ord to adminDDD;
+grant select on dbschema.OrderInvoice to adminDDD;
+grant select on dbschema.SF to adminDDD;
+grant select on dbschema.Customer to adminDDD;
+grant insert on dbschema.Item to adminDDD;
+
+---employee login--
+CREATE Login EmployeeofDDD
+with PASSWORD = 'sam321';
+
+--create staff user ---
+CREATE user staffDDD for Login EmployeeofDDD;
+
+--grant acces on staffDDD--
+grant select on dbschema.Category to staffDDD;
+grant select on dbschema.Ord to staffDDD;
+grant select on dbschema.OrderInvoice to staffDDD;
+grant select on dbschema.SF to staffDDD;
+grant select on dbschema.C to staffDDD;
+grant insert on dbschema.Item to staffDDD;
+
+--deny delete, alter , update---
+deny delete,update,alter on dbschema.Category to staffDB;
+deny delete, update,alter on dbschema.Item to staffDB;
+select * from dbschema.Item;
+delete from dbschema.Item where ItemID='ID022';
+select * from dbschema.Item;
+
+---execute user---
+EXECUTE AS USER = 'StaffDDD'
+REVERT
+select * from dbschema.Item
+
+---testing---
+delete from dbschema.Item where ItemID='ID022';
+select * from dbschema.Item;
+
+---Distinction---
+
+---Backup plan Database---
+backup database Assig2
+To Disk = 'D:\HND43\DDD\Backup\Assig2.bak'
+
+---Restore database---
+restore database Assig2
+from Disk = 'D:\HND43\DDD\backup\Assig2.bak' with replace;
+
+---Create Trigger---
+Create table dbschema.order_trigger(
+	id int IDENTITY(1,1) Primary key,
+	Description varchar (100));
+
+create trigger ordtriger 
+on dbschema.Ord
+after insert 
+as 
+begin
+	insert into dbschema.order_trigger values (CONCAT('One row is 
+inserted',GETDATE()))
+end
+
+insert into dbschema.Ord values('OD31','2022/11/2','2022/11/5',3000,0,'2:45',153.580,'SF16','CUS07');
+select * from dbschema.Ord 
+select * from dbschema.order_trigger
+insert into dbschema.Ord values('OD32','2022/11/2','2022/11/5',3000,0,'2:45',153.580,'SF16','CUS07');
+
+---Create Trigger---
+Create table dbschema.Item_trigger(
+	id int IDENTITY(1,1) Primary key,
+	Description varchar (100));
+
+create trigger Itemtrigger 
+on dbschema.Item
+after insert
+as 
+begin
+	insert into dbschema.Item_trigger values (CONCAT('One row is 
+inserted',GETDATE()))
+end
+
+insert into dbschema.Item values('ID79','leather',8000,'CTG01')
+insert into dbschema.Item values('ID78','leather',8000,'CTG01')
+select * from dbschema.Item
+select * from dbschema.Item_trigger
+
