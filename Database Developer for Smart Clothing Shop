@@ -1,4 +1,3 @@
-
 Create database db;
 use db;
 create schema dbschema;
